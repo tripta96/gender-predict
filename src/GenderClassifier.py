@@ -1,8 +1,3 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction import DictVectorizer
-from sklearn.naive_bayes import ComplementNB
-
 
 class GenderClassifier:
 
