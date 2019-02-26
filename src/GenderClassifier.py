@@ -1,6 +1,5 @@
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.naive_bayes import ComplementNB
-import pandas as pd
 
 
 class GenderClassifier:
@@ -19,9 +18,7 @@ class GenderClassifier:
             "last2": name[-2:],
             "last3": name[-3:],
             "last4": name[-4:],
-            "lastVowel": name[-1] in 'aeiou'
         }
-        self._X = None
 
     def preprocess(self, df):
 
@@ -51,5 +48,8 @@ class GenderClassifier:
         self.train()
 
     def add_new(self, name, gender):
+
         name_features = self._getFeatures(name)
-        self._X.append(pd.Series(name_features), ignore_index=True)
+        self._X[self._X.index[-1] + 1] = name_features
+        gender = '0' if gender == 'M' else '1'
+        self._y[self._X.index[-1] + 1] = gender

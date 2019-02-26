@@ -1,9 +1,25 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title> Gender Predictor!</title>
+</head>
 
-<title> Gender Predictor!</title>
-{% if gender %}
-Gender: {{gender}}
-{% endif %}
-<form method="POST">
-    <input name="name", placeholder="Enter first name">
-    <input type="submit">
-</form>
+<body>
+    <div style="text-align:center; ">
+    <h1>Gender Predictor!</h1>
+    <br>
+    <form method="POST">
+        <input name="name", placeholder="Enter first name">
+        <input type="submit">
+    </form>
+    <br>
+    {% if gender %}
+    <h3>Gender: {{gender}}</h3>
+    {% endif %}
+    </div>
+</body>
+
+</html>

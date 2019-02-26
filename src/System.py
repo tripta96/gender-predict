@@ -16,19 +16,13 @@ class System:
         self._cl.setup(df)
 
     def predict(self, name):
+        # in the case where first and last name added, use only first
         name = name.split(' ')
-        prediction = None
-        if(name):
-            prediction = self._cl.predict(name[0])
+        prediction = self._cl.predict(name[0]) if name else None
         return prediction
 
     def add_data(self, name, gender):
         self._cl.add_new(name, gender)
 
-    # for retraining when added more data
     def train(self):
-        print("training")
         self._cl.train()
-
-    def update():
-        pass
