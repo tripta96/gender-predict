@@ -1,5 +1,7 @@
 # gender-predict
 
+App that will predict the gender of a person given a first name
+
 ## Setup
 
 * In a python2 virtual environment, run `pip install -r requirements.txt` to install all project dependencies
