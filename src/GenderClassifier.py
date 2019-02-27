@@ -26,10 +26,9 @@ class GenderClassifier:
         df = df.sample(frac=1, random_state=10).reset_index(drop=True)
 
         df['gender'].replace(['M', 'F'], ['0', '1'], inplace=True)
-        X = df.drop(columns=['gender', 'name'])
-        self._y = df['gender']
-        X['dict'] = df['name'].apply(lambda x: self._getFeatures(x))
-        self._X = X['dict']
+        y = df['gender']
+        X = df['name'].apply(lambda x: self._getFeatures(x))
+        return X, y
 
     def train(self):
         self._vectorizer.fit(self._X)
@@ -44,12 +43,11 @@ class GenderClassifier:
 
     # preprocess & train classifier
     def setup(self, df):
-        self.preprocess(df)
+        self._X, self._y = self.preprocess(df)
         self.train()
 
-    def add_new(self, name, gender):
-
-        name_features = self._getFeatures(name)
-        self._X[self._X.index[-1] + 1] = name_features
-        gender = '0' if gender == 'M' else '1'
-        self._y[self._X.index[-1] + 1] = gender
+    # append provided name and gender to current dataset
+    def add_new(self, df):
+        add_x, add_y = self.preprocess(df)
+        self._X = self._X.append(add_x, ignore_index=True)
+        self._y = self._y.append(add_y, ignore_index=True)

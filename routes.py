@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, Blueprint
-from flask_restplus import Api, Resource, reqparse, fields
+from flask_restplus import Api, Resource, reqparse, fields, marshal
 from src.System import System
 # import json
 
@@ -20,16 +20,11 @@ parser = reqparse.RequestParser()
 parser.add_argument('name', required=True,
                      location='form')
 
-# data = {
-#     'name':fields.String, 
-#     'gender':fields.String
-#     }
-# data_list = {'data_list': fields.List(fields.Nested(data))}
 
-
-# MAYBE MAKE THIS JSON AND HAVE MULTIPLE ITEMS GOING IN AND THEN TRAIN
-parser_update = parser.copy()
-parser_update.add_argument('gender', required=True, choices=('M', 'F'))
+model = api.model('data', {
+    "name": fields.String(description="First Name", required=True),
+    "gender": fields.String(description="Gender", required=True)
+})
 
 
 @api.route('/api')
@@ -47,27 +42,15 @@ class updateData(Resource):
         system.train()
 
     @api.doc(description='Update data on server')
-    @api.expect(parser_update)
+    @api.expect(model)
     def post(self):
-        args = parser_update.parse_args()
-        system.add_data(args['name'], args['gender'])
-
-    # # @api.expect(data)
-    # # @api.marshal_with(data)
-    # def post(self):
-    #     # print(api.payload)
-
-    #     # jdata = request.get_json()
-    #     # print(jdata)
-    #     args = parser_update.parse_args()
-    #     # print(args['data'])
-    #     # str_fixed = args['data'].replace("'","\"")
-    #     # str_fixed = str_fixed.replace("u\"","\"")
-    #     # print(str_fixed)
-    #     # print(json.loads(str_fixed))
-    #     # for name in json.loads(str_fixed['gender']):
-    #     #     print(name)
-    #     system.add_data(args['name'], args['gender'])
+        data = request.json
+        if(not isinstance(data, list)):
+            dict_list = []
+            dict_list.append(data)
+            system.add_data(dict_list)
+        else:
+            system.add_data(data)
 
 
 @app.route('/', methods=['POST', 'GET'])

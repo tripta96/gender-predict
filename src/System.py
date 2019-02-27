@@ -4,11 +4,10 @@ from GenderClassifier import GenderClassifier
 
 class System:
 
-    # TODO: figure out where all this should go! (might be too coupled)
     def __init__(self):
         df = pd.read_csv('name_gender.csv', header=None)
 
-        # drop unnecassary col
+        # drop unnecassary columns
         df.drop(columns=2, inplace=True)
         df.set_axis(['name', 'gender'], axis='columns', inplace=True)
 
@@ -21,8 +20,8 @@ class System:
         prediction = self._cl.predict(name[0]) if name else None
         return prediction
 
-    def add_data(self, name, gender):
-        self._cl.add_new(name, gender)
+    def add_data(self, data):
+        self._cl.add_new(pd.DataFrame(data))
 
     def train(self):
         self._cl.train()
