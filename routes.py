@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, Blueprint
-from flask_restplus import Api, Resource, reqparse, fields, marshal
+from flask_restplus import Api, Resource, reqparse, fields
 from src.System import System
-# import json
 
 
 app = Flask(__name__)
