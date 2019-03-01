@@ -4,7 +4,7 @@ App that will predict the gender of a person given a first name
 
 ## Setup
 
-* Clone is reposipory in a python2 virtual environment and run `pip install -r requirements.txt` to install all project dependencies
+* Clone this reposipory in a python2 virtual environment and run `pip install -r requirements.txt` to install all project dependencies
   * Note this project was developed on and tested on ubuntu 18.04
 
 ## Running
